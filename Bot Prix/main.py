@@ -1,13 +1,20 @@
+import os
 import requests
 from bs4 import BeautifulSoup
 
 # Configuration
 URL = "https://ledenicheur.fr/product.php?p=11403019"
 SEUIL = 1100  # Seuil d'alerte
-TELEGRAM_BOT_TOKEN = "7735919437:AAEnVqTSdtL52LMqBHmtLYQFn_4WXYrcq6c"
-TELEGRAM_CHAT_ID = "8132587274"
+
+# 🔐 Récupération des secrets depuis les variables d'environnement
+TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
+TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID")
 
 def envoyer_telegram(message):
+    if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHAT_ID:
+        print("❌ Les variables d'environnement Telegram ne sont pas définies.")
+        return
+
     url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
     data = {"chat_id": TELEGRAM_CHAT_ID, "text": message}
     response = requests.post(url, data=data)
@@ -21,7 +28,6 @@ def get_best_offer_with_link():
     response = requests.get(URL, headers=headers)
     soup = BeautifulSoup(response.text, "html.parser")
 
-    # Sélection des offres contenant un lien
     offer_blocks = soup.find_all("a", href=True, attrs={
         "class": lambda x: x and ("go-to-shop" in x or "CardActionArea" in x)
     })
@@ -31,7 +37,6 @@ def get_best_offer_with_link():
         link = block['href']
         full_link = "https://ledenicheur.fr" + link if link.startswith("/") else link
 
-        # Extraction du ou des prix visibles dans l'offre
         price_els = block.find_all("h4", attrs={"data-test": "PriceLabel"})
         if not price_els:
             continue
@@ -48,13 +53,12 @@ def get_best_offer_with_link():
         print("❌ Aucune offre trouvée avec lien.")
         return None
 
-    # Meilleure offre
     best_offer = min(offers, key=lambda x: x[0])
     print(f"✅ Meilleure offre avec lien : {best_offer[0]} €")
     print(f"🔗 Lien d'achat : {best_offer[1]}")
     return best_offer
 
-# Exécution du script
+# Exécution
 offer = get_best_offer_with_link()
 if offer and offer[0] < SEUIL:
     message = f"📉 Offre détectée à {offer[0]} € !\n👉 {offer[1]}"
