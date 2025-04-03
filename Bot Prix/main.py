@@ -7,8 +7,8 @@ URL = "https://ledenicheur.fr/product.php?p=11403019"
 SEUIL = 1100  # Seuil d'alerte
 
 # 🔐 Récupération des secrets depuis les variables d'environnement
-TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
-TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID")
+TELEGRAM_BOT_TOKEN = os.environ.get("7735919437:AAEnVqTSdtL52LMqBHmtLYQFn_4WXYrcq6c")
+TELEGRAM_CHAT_ID = os.environ.get("8132587274")
 
 def envoyer_telegram(message):
     if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHAT_ID:
