@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 
 # Configuration
 URL = "https://ledenicheur.fr/product.php?p=11403019"
-SEUIL = 1100  # Seuil d'alerte
+SEUIL = 1200  # Seuil d'alerte
 
 # 🔐 Récupération des secrets depuis les variables d'environnement
 TELEGRAM_BOT_TOKEN = os.environ.get("7735919437:AAEnVqTSdtL52LMqBHmtLYQFn_4WXYrcq6c")
