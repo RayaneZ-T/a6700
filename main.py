@@ -2,6 +2,12 @@ import os
 import requests
 from bs4 import BeautifulSoup
 
+print("🔍 TELEGRAM_BOT_TOKEN défini ?", "TELEGRAM_BOT_TOKEN" in os.environ)
+print("🔍 TELEGRAM_CHAT_ID défini ?", "TELEGRAM_CHAT_ID" in os.environ)
+
+print("🪪 TELEGRAM_BOT_TOKEN =", os.environ.get("TELEGRAM_BOT_TOKEN"))
+print("🪪 TELEGRAM_CHAT_ID =", os.environ.get("TELEGRAM_CHAT_ID"))
+
 # Configuration
 URL = "https://ledenicheur.fr/product.php?p=11403019"
 SEUIL = 1200  # Seuil d'alerte
