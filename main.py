@@ -2,19 +2,13 @@ import os
 import requests
 from bs4 import BeautifulSoup
 
-print("🔍 TELEGRAM_BOT_TOKEN défini ?", "TELEGRAM_BOT_TOKEN" in os.environ)
-print("🔍 TELEGRAM_CHAT_ID défini ?", "TELEGRAM_CHAT_ID" in os.environ)
-
-print("🪪 TELEGRAM_BOT_TOKEN =", os.environ.get("TELEGRAM_BOT_TOKEN"))
-print("🪪 TELEGRAM_CHAT_ID =", os.environ.get("TELEGRAM_CHAT_ID"))
-
 # Configuration
 URL = "https://ledenicheur.fr/product.php?p=11403019"
 SEUIL = 1200  # Seuil d'alerte
 
 # 🔐 Récupération des secrets depuis les variables d'environnement
-TELEGRAM_BOT_TOKEN = os.environ.get("7735919437:AAEnVqTSdtL52LMqBHmtLYQFn_4WXYrcq6c")
-TELEGRAM_CHAT_ID = os.environ.get("8132587274")
+TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
+TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID")
 
 def envoyer_telegram(message):
     if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHAT_ID:
